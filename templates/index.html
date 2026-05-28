@@ -2,28 +2,32 @@
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
-    <title>Пошук за ключем</title>
+    <title>Практичні завдання</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 50px; text-align: center; background-color: #f4f4f9; }
-        .container { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); display: inline-block; }
-        input[type="text"] { padding: 10px; width: 200px; border: 1px solid #ccc; border-radius: 5px; }
-        input[type="submit"] { padding: 10px 20px; background: #007BFF; color: white; border: none; border-radius: 5px; cursor: pointer; }
-        input[type="submit"]:hover { background: #0056b3; }
-        .result { margin-top: 20px; font-size: 18px; font-weight: bold; color: #333; }
+        .container { background: white; padding: 40px; border-radius: 10px; box-shadow: 0 0 15px rgba(0,0,0,0.1); display: inline-block; }
+        h1 { color: #333; margin-bottom: 30px; }
+        .btn-menu { display: flex; flex-direction: column; gap: 15px; width: 250px; margin: 0 auto; }
+        .btn { padding: 15px; font-size: 16px; color: white; border: none; border-radius: 5px; cursor: pointer; text-decoration: none; font-weight: bold; transition: background 0.2s; }
+       
+        .btn-1 { background: #007BFF; } .btn-1:hover { background: #0056b3; }
+        .btn-2 { background: #28A745; } .btn-2:hover { background: #1e7e34; }
+        .btn-3 { background: #17A2B8; } .btn-3:hover { background: #117a8b; }
+        .btn-4 { background: #FFC107; color: #333; } .btn-4:hover { background: #d39e00; }
+        .btn-5 { background: #DC3545; } .btn-5:hover { background: #bd2130; }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <h2>Введіть ключ (від 1 до 10):</h2>
-        <form method="POST">
-            <input type="text" name="key" placeholder="Наприклад: 5" required>
-            <input type="submit" value="Отримати значення">
-        </form>
-       
-        {% if result is not none %}
-            <div class="result">Значення: {{ result }}</div>
-        {% endif %}
+        <h1>Оберіть завдання</h1>
+        <div class="btn-menu">
+            <a href="/task1" class="btn btn-1">Завдання 1: Словник</a>
+            <a href="/task2" class="btn btn-2">Завдання 2</a>
+            <a href="/task3" class="btn btn-3">Завдання 3</a>
+            <a href="/task4" class="btn btn-4">Завдання 4</a>
+            <a href="/task5" class="btn btn-5">Завдання 5</a>
+        </div>
     </div>
 
 </body>

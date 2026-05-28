@@ -1,19 +1,16 @@
-from flask import Flask, request, render_template
+from flask import Flask, render_template
+
+from tasks.task1 import task1_bp
 
 app = Flask(__name__)
 
 # Словник
-data_dict = {str(x): x**2 for x in range(1, 11)}
+app.register_blueprint(task1_bp)
 
-@app.route('/', methods=['GET', 'POST'])
-def home():
-    result = None
-    if request.method == 'POST':
-        search_key = request.form.get('key').strip()
-        result = data_dict.get(search_key, "Ключ не знайдено у словнику!")
-   
-    # Передаємо змінну result всередину HTML-файлу
-    return render_template('index.html', result=result)
+# Головна сторінка
+@app.route('/')
+def main_page():
+    return render_template('index.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
