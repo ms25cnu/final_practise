@@ -1,7 +1,7 @@
 from flask import Flask, render_template
 
 from tasks.task1 import task1_bp
-from tasks.task1 import task2_bp
+from tasks.task2 import task2_bp
 
 app = Flask(__name__)
 
