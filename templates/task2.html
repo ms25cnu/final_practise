@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Завдання 2: Сортування CSV</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 50px; background-color: #f4f4f9; color: #333; }
+        .container { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); max-width: 800px; margin: 0 auto; }
+        h2 { text-align: center; color: #17A2B8; }
+        .form-group { margin-bottom: 15px; }
+        input[type="file"], select { padding: 8px; width: 100%; box-sizing: border-box; border: 1px solid #ccc; border-radius: 5px; margin-top: 5px; }
+        .btn-submit { display: block; width: 100%; padding: 12px; background: #17A2B8; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; font-weight: bold; margin-top: 15px; }
+        .btn-submit:hover { background: #138496; }
+        .error { color: red; font-weight: bold; margin-bottom: 15px; text-align: center; }
+       
+        /* Стилі для таблиці */
+        table { width: 100%; border-collapse: collapse; margin-top: 25px; font-size: 14px; }
+        th, td { border: 1px solid #dee2e6; padding: 10px; text-align: left; }
+        th { background-color: #e9ecef; font-weight: bold; }
+        tr:nth-child(even) { background-color: #f8f9fa; }
+        .highlight { background-color: #d1ecf1 !important; font-weight: bold; }
+       
+        .back-link { display: block; text-align: center; margin-top: 30px; color: #666; text-decoration: none; }
+        .back-link:hover { color: #007BFF; text-decoration: underline; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Сортування даних з CSV-файлу 📊</h2>
+       
+        {% if error %}
+            <div class="error">{{ error }}</div>
+        {% endif %}
+
+        <form method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="csv_file">Оберіть CSV файл:</label>
+                <input type="file" name="csv_file" id="csv_file" accept=".csv" required>
+            </div>
+
+            {% if headers %}
+                <div class="form-group">
+                    <label for="sort_column">Сортувати за колонкою:</label>
+                    <select name="sort_column" id="sort_column" onchange="this.form.submit()">
+                        <option value="">-- Оберіть колонку --</option>
+                        {% for header in headers %}
+                            <option value="{{ header }}" {% if header == selected_column %}selected{% endif %}>{{ header }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            {% endif %}
+
+            <input type="submit" value="Завантажити та обробити" class="btn-submit">
+        </form>
+
+        {% if rows %}
+            <h3>Результат:</h3>
+            <table>
+                <thead>
+                    <tr>
+                        {% for header in headers %}
+                            <th class="{% if header == selected_column %}highlight{% endif %}">{{ header }}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in rows %}
+                        <tr>
+                            {% for header in headers %}
+                                <td class="{% if header == selected_column %}highlight{% endif %}">{{ row[header] }}</td>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+
+        <a href="/" class="back-link">← На головне меню</a>
+    </div>
+
+</body>
+</html>

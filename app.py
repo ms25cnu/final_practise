@@ -1,11 +1,14 @@
 from flask import Flask, render_template
 
 from tasks.task1 import task1_bp
+from tasks.task1 import task2_bp
 
 app = Flask(__name__)
 
 # Словник
 app.register_blueprint(task1_bp)
+# CSV file
+app.register_blueprint(task2_bp)
 
 # Головна сторінка
 @app.route('/')
