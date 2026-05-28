@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Пошук за ключем</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 50px; text-align: center; background-color: #f4f4f9; }
+        .container { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); display: inline-block; }
+        input[type="text"] { padding: 10px; width: 200px; border: 1px solid #ccc; border-radius: 5px; }
+        input[type="submit"] { padding: 10px 20px; background: #007BFF; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        input[type="submit"]:hover { background: #0056b3; }
+        .result { margin-top: 20px; font-size: 18px; font-weight: bold; color: #333; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Введіть ключ (від 1 до 10):</h2>
+        <form method="POST">
+            <input type="text" name="key" placeholder="Наприклад: 5" required>
+            <input type="submit" value="Отримати значення">
+        </form>
+       
+        {% if result is not none %}
+            <div class="result">Значення: {{ result }}</div>
+        {% endif %}
+    </div>
+
+</body>
+</html>
