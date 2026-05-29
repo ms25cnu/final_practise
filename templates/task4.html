@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Завдання 4: Евристика MRV у CSP</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; background-color: #f4f4f9; text-align: center; }
+        .container { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); display: inline-block; max-width: 650px; width: 100%; text-align: left; box-sizing: border-box; }
+        h2 { color: #FFC107; text-align: center; margin-bottom: 10px; }
+        .subtitle { color: #666; text-align: center; margin-bottom: 25px; font-size: 14px; }
+       
+        .variable-card { background: #f8f9fa; border: 1px solid #e2e8f0; padding: 15px; border-radius: 6px; margin-bottom: 12px; }
+        .variable-card.selected { border: 2px solid #FFC107; background: #fffdf5; }
+        .var-title { font-size: 18px; font-weight: bold; color: #333; margin-bottom: 8px; }
+        .badge { background: #6c757d; color: white; padding: 2px 8px; border-radius: 10px; font-size: 12px; margin-left: 10px; }
+        .badge.highlight { background: #FFC107; color: #333; font-weight: bold; }
+       
+        .checkbox-group { display: flex; gap: 15px; flex-wrap: wrap; margin-top: 5px; }
+        .checkbox-group label { cursor: pointer; font-size: 14px; }
+       
+        .btn-calc { display: block; width: 100%; padding: 12px; background: #FFC107; color: #333; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; font-weight: bold; margin-top: 20px; transition: background 0.2s; }
+        .btn-calc:hover { background: #e0a800; }
+       
+        .result-box { margin-top: 25px; padding: 15px; background: #e9ecef; border-left: 5px solid #FFC107; border-radius: 0 5px 5px 0; font-size: 16px; }
+        .back-link { display: block; text-align: center; margin-top: 30px; color: #666; text-decoration: none; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Евристика MRV 🔍</h2>
+        <div class="subtitle">Симуляція вибору чергової змінної для задачі задоволення обмежень (CSP)</div>
+
+        <p><strong>Суть методу:</strong> Алгоритм аналізує всі змінні (області карти) та обирає ту, яка має найменше доступних значень (кольорів). Це мінімізує розгалуження пошуку.</p>
+
+        <form method="POST">
+            {% for var, colors in domains.items() %}
+                <div class="variable-card {% if var == mrv_variable %}selected{% endif %}">
+                    <div class="var-title">
+                        Змінна (Область) {{ var }}
+                        <span class="badge {% if var == mrv_variable %}highlight{% endif %}">
+                            Варіантів: {{ colors|length }}
+                        </span>
+                    </div>
+                    <div class="checkbox-group">
+                        {% for color in ['Червоний', 'Зелений', 'Синій', 'Жовтий'] %}
+                            <label>
+                                <input type="checkbox" name="colors_{{ var }}" value="{{ color }}"
+                                       {% if color in colors %}checked{% endif %}>
+                                {{ color }}
+                            </label>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+
+            <button type="submit" class="btn-calc">Запустити вибір MRV 🚀</button>
+        </form>
+
+        {% if explanation %}
+            <div class="result-box">
+                {{ explanation|safe }}
+            </div>
+        {% endif %}
+
+        <a href="/" class="back-link">← На головне меню</a>
+    </div>
+
+</body>
+</html>
