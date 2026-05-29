@@ -5,6 +5,7 @@ from tasks.task2 import task2_bp
 from tasks.task3 import task3_bp
 
 app = Flask(__name__)
+app.secret_key = 'super-secret-key-for-nim-game'
 
 # Словник
 app.register_blueprint(task1_bp)
