@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Завдання 3: Гра Нім проти ШІ</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; background-color: #f4f4f9; text-align: center; }
+        .container { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); display: inline-block; max-width: 600px; width: 100%; box-sizing: border-box; }
+        h2 { color: #17A2B8; margin-bottom: 20px; }
+       
+        /* Візуальні камені */
+        .stones-area { margin: 20px 0; padding: 15px; background: #e9ecef; border-radius: 8px; min-height: 60px; display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; }
+        .stone { width: 30px; height: 30px; background: #6c757d; border-radius: 50%; box-shadow: inset -3px -3px 5px rgba(0,0,0,0.4); display: inline-block; }
+       
+        .btn { padding: 10px 20px; font-size: 16px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; margin: 5px; }
+        .btn-take { background: #007BFF; color: white; }
+        .btn-take:hover { background: #0056b3; }
+        .btn-reset { background: #6c757d; color: white; }
+       
+        .winner-box { background: #d4edda; color: #155724; padding: 15px; border-radius: 5px; margin: 20px 0; font-size: 20px; font-weight: bold; }
+       
+        /* Лог гри */
+        .log-box { text-align: left; background: #333; color: #fff; padding: 15px; border-radius: 5px; max-height: 150px; overflow-y: auto; font-family: monospace; font-size: 14px; margin-top: 20px; }
+        .log-entry { margin-bottom: 5px; border-bottom: 1px solid #444; padding-bottom: 3px; }
+       
+        .back-link { display: block; margin-top: 30px; color: #666; text-decoration: none; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Гра Нім з обмеженням (1-3) 🤖 vs 👤</h2>
+        <p>Правило: на столі є камені. Можна брати 1, 2 або 3 за хід. Хто бере <strong>останній камінь</strong> — програє!</p>
+       
+        <div class="stones-area">
+            {% for _ in range(stones) %}
+                <div class="stone"></div>
+            {% endfor %}
+            {% if stones == 0 %}
+                <span style="color: #721c24; font-weight: bold;">Каменів не залишилось!</span>
+            {% endif %}
+        </div>
+       
+        <p style="font-size: 18px;">Залишилось каменів на столі: <strong>{{ stones }}</strong></p>
+
+        {% if winner %}
+            <div class="winner-box">
+                🏆 Переміг: {{ winner }}!
+            </div>
+        {% else %}
+            <form method="POST">
+                <input type="hidden" name="action" value="player_move">
+                <label style="font-size: 16px;">Скільки каменів берете? </label>
+                <select name="player_take" style="padding: 8px; font-size: 16px; border-radius: 5px;">
+                    <option value="1">1</option>
+                    {% if stones >= 2 %}<option value="2">2</option>{% endif %}
+                    {% if stones >= 3 %}<option value="3">3</option>{% endif %}
+                </select>
+                <button type="submit" class="btn btn-take">Зробити хід</button>
+            </form>
+        {% endif %}
+
+        <form method="POST" style="margin-top: 15px;">
+            <input type="hidden" name="action" value="reset">
+            <button type="submit" class="btn btn-reset">Почати заново 🔄</button>
+        </form>
+
+        <div class="log-box">
+            {% for entry in log %}
+                <div class="log-entry">{{ entry }}</div>
+            {% endfor %}
+        </div>
+
+        <a href="/" class="back-link">← На головне меню</a>
+    </div>
+
+</body>
+</html>
