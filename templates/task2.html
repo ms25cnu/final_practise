@@ -11,9 +11,10 @@
         input[type="file"], select { padding: 8px; width: 100%; box-sizing: border-box; border: 1px solid #ccc; border-radius: 5px; margin-top: 5px; }
         .btn-submit { display: block; width: 100%; padding: 12px; background: #17A2B8; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; font-weight: bold; margin-top: 15px; }
         .btn-submit:hover { background: #138496; }
+        .btn-reset { background: #6c757d; margin-top: 10px; }
+        .btn-reset:hover { background: #5a6268; }
         .error { color: red; font-weight: bold; margin-bottom: 15px; text-align: center; }
        
-        /* Стилі для таблиці */
         table { width: 100%; border-collapse: collapse; margin-top: 25px; font-size: 14px; }
         th, td { border: 1px solid #dee2e6; padding: 10px; text-align: left; }
         th { background-color: #e9ecef; font-weight: bold; }
@@ -34,24 +35,24 @@
         {% endif %}
 
         <form method="POST" enctype="multipart/form-data">
-            <div class="form-group">
-                <label for="csv_file">Оберіть CSV файл:</label>
-                <input type="file" name="csv_file" id="csv_file" accept=".csv" required>
-            </div>
-
-            {% if headers %}
+            {% if not headers %}
+                <div class="form-group">
+                    <label for="csv_file">Оберіть CSV файл:</label>
+                    <input type="file" name="csv_file" id="csv_file" accept=".csv">
+                </div>
+                <input type="submit" value="Завантажити та обробити" class="btn-submit">
+            {% else %}
                 <div class="form-group">
                     <label for="sort_column">Сортувати за колонкою:</label>
                     <select name="sort_column" id="sort_column" onchange="this.form.submit()">
-                        <option value="">-- Оберіть колонку --</option>
+                        <option value="">-- Без сортування --</option>
                         {% for header in headers %}
                             <option value="{{ header }}" {% if header == selected_column %}selected{% endif %}>{{ header }}</option>
                         {% endfor %}
                     </select>
                 </div>
+                <button type="submit" name="action" value="reset" class="btn-submit btn-reset">Завантажити інший файл 🔄</button>
             {% endif %}
-
-            <input type="submit" value="Завантажити та обробити" class="btn-submit">
         </form>
 
         {% if rows %}
